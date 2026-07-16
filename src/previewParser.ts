@@ -153,6 +153,13 @@ function parseMetadata(
         return;
     }
 
+    if (
+        value.layout !== "horizontal" &&
+        value.layout !== "vertical"
+    ) {
+        return;
+    }
+
     const width = value.width as number;
     const height = value.height as number;
 
@@ -167,7 +174,8 @@ function parseMetadata(
     return {
         type: "1bpp",
         width,
-        height
+        height,
+        layout: value.layout
     };
 }
 

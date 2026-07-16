@@ -29,21 +29,23 @@ export function activate(
                         values
                     } = preview;
 
-                    const requiredLength =
+                    const requiredBits =
                         metadata.width * metadata.height;
 
+                    const requiredLength =
+                        metadata.layout === "horizontal"
+                            ? Math.ceil(metadata.width / 8) *
+                            metadata.height
+                            : metadata.width *
+                            Math.ceil(metadata.height / 8);
+
                     if (values.length < requiredLength) {
-                        const md =
-                            new vscode.MarkdownString();
+                        const md = new vscode.MarkdownString();
 
-                        md.appendMarkdown(
-                            `### ${name}\n\n`
-                        );
-
+                        md.appendMarkdown(`### ${name}\n\n`);
                         md.appendMarkdown(
                             `Not enough data: ` +
-                            `${values.length}/` +
-                            `${requiredLength}`
+                            `${values.length}/${requiredLength} bytes`
                         );
 
                         return new vscode.Hover(md);
@@ -52,7 +54,8 @@ export function activate(
                     const base64 = render1bpp(
                         values,
                         metadata.width,
-                        metadata.height
+                        metadata.height,
+                        metadata.layout
                     );
 
                     const md =

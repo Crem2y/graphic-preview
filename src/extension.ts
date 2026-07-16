@@ -23,14 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 	context.subscriptions.push(
-        vscode.languages.registerHoverProvider('c', {
+        vscode.languages.registerHoverProvider(["c", "cpp"], {
             provideHover(document, position) {
 
                 const text = document.getText();
 
                 const offset = document.offsetAt(position);
 
-                // 현재 위치 기준으로 가장 가까운 { 와 }
+                // Find '{' and '}'
                 const begin = text.lastIndexOf("{", offset);
                 const end = text.indexOf("}", offset);
 
@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 const body = text.substring(begin + 1, end);
 
-                // 숫자 추출
+                // Extract data
                 const matches = body.match(/0x[0-9a-fA-F]+|\d+/g);
                 if (!matches || matches.length < 64)
                     return;
@@ -49,22 +49,25 @@ export function activate(context: vscode.ExtensionContext) {
                     .map(v => parseInt(v, 0));
 
                 //----------------------------------------
-                // PNG 생성
+                // Make PNG
                 //----------------------------------------
+                const g_width = 8;
+                const g_height = 8;
+
 
                 const png = new PNG({
-                    width: 8,
-                    height: 8,
+                    width: g_width,
+                    height: g_height,
                 });
 
-                for (let y = 0; y < 8; y++) {
-                    for (let x = 0; x < 8; x++) {
+                for (let y = 0; y < g_height; y++) {
+                    for (let x = 0; x < g_width; x++) {
 
-                        const value = data[y * 8 + x];
+                        const value = data[y * g_width + x];
 
                         const c = value == 0 ? 255 : 0;
 
-                        const idx = (y * 8 + x) * 4;
+                        const idx = (y * g_width + x) * 4;
 
                         png.data[idx + 0] = c;
                         png.data[idx + 1] = c;
@@ -73,11 +76,15 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 }
 
+
+                //----------------------------------------
+                // Output PNG
+                //----------------------------------------
                 const base64 = PNG.sync.write(png).toString("base64");
 
                 const md = new vscode.MarkdownString();
 
-                md.appendMarkdown("### Font preview\n\n");
+                md.appendMarkdown("### Graphic preview\n\n");
                 md.appendMarkdown(
                     `![](data:image/png;base64,${base64})`
                 );

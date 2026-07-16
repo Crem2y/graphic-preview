@@ -1,15 +1,20 @@
 import { PNG } from "pngjs";
 import { PreviewLayout } from "./previewTypes";
 
+const PREVIEW_SCALE = 4;
+
 export function render1bpp(
     values: number[],
     width: number,
     height: number,
     layout: PreviewLayout
 ): string {
+    const outputWidth = width * PREVIEW_SCALE;
+    const outputHeight = height * PREVIEW_SCALE;
+
     const png = new PNG({
-        width,
-        height
+        width: outputWidth,
+        height: outputHeight
     });
 
     for (let y = 0; y < height; y++) {
@@ -19,7 +24,37 @@ export function render1bpp(
                 : getVerticalBit(values, height, x, y);
 
             const color = bit === 0 ? 255 : 0;
-            const outputIndex = (y * width + x) * 4;
+
+            drawScaledPixel(
+                png,
+                x,
+                y,
+                PREVIEW_SCALE,
+                color
+            );
+        }
+    }
+
+    return PNG.sync.write(png).toString("base64");
+}
+
+function drawScaledPixel(
+    png: PNG,
+    sourceX: number,
+    sourceY: number,
+    scale: number,
+    color: number
+): void {
+    const startX = sourceX * scale;
+    const startY = sourceY * scale;
+
+    for (let dy = 0; dy < scale; dy++) {
+        for (let dx = 0; dx < scale; dx++) {
+            const outputX = startX + dx;
+            const outputY = startY + dy;
+
+            const outputIndex =
+                (outputY * png.width + outputX) * 4;
 
             png.data[outputIndex + 0] = color;
             png.data[outputIndex + 1] = color;
@@ -27,8 +62,6 @@ export function render1bpp(
             png.data[outputIndex + 3] = 255;
         }
     }
-
-    return PNG.sync.write(png).toString("base64");
 }
 
 function getHorizontalBit(

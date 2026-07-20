@@ -1,71 +1,63 @@
-# graphic-preview README
+# Graphic Preview for Visual Studio Code
 
-This is the README for your extension "graphic-preview". After writing up a brief description, we recommend including the following sections.
+![preview](doc/preview.png)
+
+Preview embedded bitmap and image data directly from C and C++ source code in Visual Studio Code.
+
+Graphic Preview reads metadata from a source comment, parses the associated array, and renders the result when you hover over the array name or its contents.
+
+This extension is currently under development. The supported formats and metadata syntax may change.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Preview C and C++ array data on hover
+- Explicit metadata-based format selection
+- 1bpp bitmap rendering
+- Horizontal and vertical data layouts
+- Support for .c, .h, .cpp, and .hpp files
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+Add an `@preview` annotation immediately above the array.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+```c
+/**
+ * @brief Example 1bpp image
+ * @preview {"type":"1bpp","width":16,"height":16,"layout":"horizontal"}
+ */
+const uint8_t example_image[] = {
+    0xFF, 0xFF,
+    0x80, 0x01,
+    0x80, 0x01,
+    0x8C, 0x31,
+    0x8C, 0x31,
+    0x80, 0x01,
+    0x81, 0x81,
+    0xC0, 0x03,
+    0xA0, 0x05,
+    0x90, 0x09,
+    0x8F, 0xF1,
+    0x80, 0x01,
+    0x80, 0x01,
+    0x80, 0x01,
+    0x80, 0x01,
+    0xFF, 0xFF
+};
+```
 
-## Requirements
+## How to build
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+```bash
+# install dependencies
+npm install pngjs
+npm install --save-dev @types/pngjs
 
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+# build extension
+npm run compile
+```
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Test version :)

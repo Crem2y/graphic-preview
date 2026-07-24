@@ -1,5 +1,7 @@
 # Graphic Preview for Visual Studio Code
 
+[Support me on Ko-fi!](https://ko-fi.com/xxxxx)
+
 ![preview](doc/preview.png)
 
 Preview embedded bitmap and image data directly from C and C++ source code in Visual Studio Code.

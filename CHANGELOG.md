@@ -4,6 +4,7 @@ All notable changes to the "graphic-preview" extension will be documented in thi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## 0.0.1
 
-- Initial release
+### Added
+- Test version :)

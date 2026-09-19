@@ -1,6 +1,6 @@
 # Graphic Preview for Visual Studio Code
 
-[Support me on Ko-fi!](https://ko-fi.com/xxxxx)
+[Support me on Ko-fi!](https://ko-fi.com/crem2y)
 
 ![preview](doc/preview.png)
 
@@ -51,12 +51,15 @@ const uint8_t example_image[] = {
 
 ```bash
 # install dependencies
-npm install pngjs
-npm install --save-dev @types/pngjs
+npm ci
 
 # build extension
 npm run compile
 ```
+
+To try the extension, open this project in Visual Studio Code and press `F5`
+to launch the Extension Development Host. In the new window, open a C or C++
+file containing the example above and hover over the array name or its contents.
 
 ## Release Notes
 

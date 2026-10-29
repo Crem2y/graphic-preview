@@ -5,7 +5,7 @@ export type PreviewLayout =
 export type PreviewPacking = "packed" | "unpacked";
 
 export interface PreviewMetadata {
-    type: "1bpp";
+    type: "1bpp" | "rgb565";
     width: number;
     height: number;
     layout: PreviewLayout;

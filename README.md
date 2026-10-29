@@ -15,6 +15,7 @@ This extension is currently under development. The supported formats and metadat
 - Preview C and C++ array data on hover
 - Explicit metadata-based format selection
 - 1bpp bitmap rendering
+- RGB565 color rendering from little-endian 8-bit arrays
 - Horizontal and vertical data layouts
 - Support for .c, .h, .cpp, and .hpp files
 
@@ -64,6 +65,28 @@ const uint8_t image[] = {
 
 For unpacked data, `horizontal` reads row by row and `vertical` reads column
 by column. Both require `width * height` elements, without bit padding.
+
+### RGB565
+
+Use `"type":"rgb565"` for an 8-bit array containing two bytes per pixel,
+low byte first (little-endian). Each 16-bit pixel contains red in bits 15–11,
+green in bits 10–5, and blue in bits 4–0.
+
+```c
+// @preview {"type":"rgb565","width":3,"height":2,"layout":"horizontal"}
+const uint8_t colors[] = {
+    0x00, 0xF8, // Red:   0xF800
+    0xE0, 0x07, // Green: 0x07E0
+    0x1F, 0x00, // Blue:  0x001F
+    0xFF, 0xFF, // White
+    0x00, 0x00, // Black
+    0x10, 0x84  // Gray
+};
+```
+
+`horizontal` reads pixels row by row; `vertical` reads column by column.
+Both require `width * height * 2` bytes. Omit `packing` (defaults to `packed`);
+`unpacked`, 16-bit array elements, and big-endian data are not supported for RGB565.
 
 ## How to build
 

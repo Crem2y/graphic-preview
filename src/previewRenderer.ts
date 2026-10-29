@@ -41,12 +41,46 @@ export function render1bpp(
     return PNG.sync.write(png).toString("base64");
 }
 
+export function renderRgb565(
+    values: number[],
+    width: number,
+    height: number,
+    layout: PreviewLayout
+): string {
+    const png = new PNG({
+        width: width * PREVIEW_SCALE,
+        height: height * PREVIEW_SCALE
+    });
+
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const pixelIndex = layout === "horizontal" ? y * width + x : x * height + y;
+            const byteIndex = pixelIndex * 2;
+            const pixel = values[byteIndex] | (values[byteIndex + 1] << 8);
+            const red = (pixel >> 11) & 0x1f;
+            const green = (pixel >> 5) & 0x3f;
+            const blue = pixel & 0x1f;
+
+            drawScaledPixel(
+                png, x, y, PREVIEW_SCALE,
+                (red << 3) | (red >> 2),
+                (green << 2) | (green >> 4),
+                (blue << 3) | (blue >> 2)
+            );
+        }
+    }
+
+    return PNG.sync.write(png).toString("base64");
+}
+
 function drawScaledPixel(
     png: PNG,
     sourceX: number,
     sourceY: number,
     scale: number,
-    color: number
+    red: number,
+    green: number = red,
+    blue: number = red
 ): void {
     const startX = sourceX * scale;
     const startY = sourceY * scale;
@@ -59,9 +93,9 @@ function drawScaledPixel(
             const outputIndex =
                 (outputY * png.width + outputX) * 4;
 
-            png.data[outputIndex + 0] = color;
-            png.data[outputIndex + 1] = color;
-            png.data[outputIndex + 2] = color;
+            png.data[outputIndex + 0] = red;
+            png.data[outputIndex + 1] = green;
+            png.data[outputIndex + 2] = blue;
             png.data[outputIndex + 3] = 255;
         }
     }

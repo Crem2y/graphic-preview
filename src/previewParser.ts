@@ -142,7 +142,7 @@ function parseMetadata(
 
     const value = raw as Record<string, unknown>;
 
-    if (value.type !== "1bpp") {
+    if (value.type !== "1bpp" && value.type !== "rgb565") {
         return;
     }
 
@@ -167,6 +167,11 @@ function parseMetadata(
         return;
     }
 
+    // RGB565 currently supports only packed, little-endian byte arrays.
+    if (value.type === "rgb565" && packing !== "packed") {
+        return;
+    }
+
     const height = value.height as number;
 
     if (width <= 0 || height <= 0) {
@@ -178,7 +183,7 @@ function parseMetadata(
     }
 
     return {
-        type: "1bpp",
+        type: value.type,
         width,
         height,
         layout: value.layout,

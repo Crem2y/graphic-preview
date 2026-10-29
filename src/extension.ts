@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 import { findPreviewArray } from "./previewParser";
-import { render1bpp } from "./previewRenderer";
+import { render1bpp, renderRgb565 } from "./previewRenderer";
 
 export function activate(
     context: vscode.ExtensionContext
@@ -30,7 +30,9 @@ export function activate(
                     } = preview;
 
                     const requiredLength =
-                        metadata.packing === "unpacked"
+                        metadata.type === "rgb565"
+                            ? metadata.width * metadata.height * 2
+                            : metadata.packing === "unpacked"
                             ? metadata.width * metadata.height
                             : metadata.layout === "horizontal"
                             ? Math.ceil(metadata.width / 8) *
@@ -51,7 +53,15 @@ export function activate(
                         return new vscode.Hover(md);
                     }
 
-                    const base64 = render1bpp(
+                    if (metadata.type === "rgb565" && values.some(value =>
+                        !Number.isInteger(value) || value < 0 || value > 255
+                    )) {
+                        return new vscode.Hover("RGB565 requires 8-bit array elements (0–255).");
+                    }
+
+                    const base64 = metadata.type === "rgb565"
+                        ? renderRgb565(values, metadata.width, metadata.height, metadata.layout)
+                        : render1bpp(
                         values,
                         metadata.width,
                         metadata.height,

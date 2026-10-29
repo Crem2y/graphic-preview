@@ -1,4 +1,6 @@
-# Graphic Preview for Visual Studio Code
+# C Array Image Preview for Visual Studio Code
+
+[View on VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Crem2y.c-array-image-preview)
 
 [Support me on Ko-fi!](https://ko-fi.com/crem2y)
 
@@ -6,9 +8,9 @@
 
 Preview embedded bitmap and image data directly from C and C++ source code in Visual Studio Code.
 
-Graphic Preview reads metadata from a source comment, parses the associated array, and renders the result when you hover over the array name or its contents.
+C Array Image Preview reads metadata from a source comment, parses the associated array, and renders the result when you hover over the array name or its contents.
 
-This extension is currently under development. The supported formats and metadata syntax may change.
+Supported formats: packed/unpacked 1bpp and RGB565 little-endian byte arrays.
 
 ## Features
 
@@ -110,6 +112,9 @@ file containing the example above and hover over the array name or its contents.
 
 ## Release Notes
 
-### 0.0.1
+### 1.0.0
 
-Test version :)
+First stable release with packed/unpacked 1bpp, little-endian RGB565,
+horizontal/vertical layouts, and automatic 1×–4× integer scaling.
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.

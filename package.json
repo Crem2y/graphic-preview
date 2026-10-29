@@ -1,8 +1,10 @@
 {
-  "name": "graphic-preview",
-  "displayName": "graphic-preview",
-  "description": "c array previewer",
-  "version": "0.0.1",
+  "name": "c-array-image-preview",
+  "displayName": "C Array Image Preview",
+  "description": "Preview 1bpp and RGB565 image arrays directly in C and C++ source code on hover.",
+  "version": "1.0.0",
+  "publisher": "Crem2y",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.125.0"
   },

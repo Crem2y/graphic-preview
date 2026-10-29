@@ -1,7 +1,15 @@
 import { PNG } from "pngjs";
 import { PreviewLayout, PreviewPacking } from "./previewTypes";
 
-const PREVIEW_SCALE = 4;
+const MAX_PREVIEW_SCALE = 4;
+const TARGET_PREVIEW_SIZE = 256;
+
+function getPreviewScale(width: number, height: number): number {
+    return Math.max(1, Math.min(
+        MAX_PREVIEW_SCALE,
+        Math.floor(TARGET_PREVIEW_SIZE / Math.max(width, height))
+    ));
+}
 
 export function render1bpp(
     values: number[],
@@ -10,8 +18,9 @@ export function render1bpp(
     layout: PreviewLayout,
     packing: PreviewPacking = "packed"
 ): string {
-    const outputWidth = width * PREVIEW_SCALE;
-    const outputHeight = height * PREVIEW_SCALE;
+    const scale = getPreviewScale(width, height);
+    const outputWidth = width * scale;
+    const outputHeight = height * scale;
 
     const png = new PNG({
         width: outputWidth,
@@ -32,7 +41,7 @@ export function render1bpp(
                 png,
                 x,
                 y,
-                PREVIEW_SCALE,
+                scale,
                 color
             );
         }
@@ -47,9 +56,10 @@ export function renderRgb565(
     height: number,
     layout: PreviewLayout
 ): string {
+    const scale = getPreviewScale(width, height);
     const png = new PNG({
-        width: width * PREVIEW_SCALE,
-        height: height * PREVIEW_SCALE
+        width: width * scale,
+        height: height * scale
     });
 
     for (let y = 0; y < height; y++) {
@@ -62,7 +72,7 @@ export function renderRgb565(
             const blue = pixel & 0x1f;
 
             drawScaledPixel(
-                png, x, y, PREVIEW_SCALE,
+                png, x, y, scale,
                 (red << 3) | (red >> 2),
                 (green << 2) | (green >> 4),
                 (blue << 3) | (blue >> 2)

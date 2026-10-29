@@ -88,6 +88,12 @@ const uint8_t colors[] = {
 Both require `width * height * 2` bytes. Omit `packing` (defaults to `packed`);
 `unpacked`, 16-bit array elements, and big-endian data are not supported for RGB565.
 
+### Preview size
+
+Both formats use integer pixel scaling (1×–4×). The largest scale that keeps
+the longer side within 256 pixels is selected, capped at 4×. Images already
+larger than 256 pixels are shown at 1× without downscaling.
+
 ## How to build
 
 ```bash

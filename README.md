@@ -47,6 +47,24 @@ const uint8_t example_image[] = {
 };
 ```
 
+### Pixel packing
+
+`packing` is optional and defaults to `"packed"`, where each array element
+stores eight pixels, most significant bit first. Existing annotations work unchanged.
+
+Use `"packing":"unpacked"` for arrays with one `0` or `1` per pixel:
+
+```c
+// @preview {"type":"1bpp","width":4,"height":2,"layout":"horizontal","packing":"unpacked"}
+const uint8_t image[] = {
+    0, 1, 0, 1,
+    1, 0, 1, 0
+};
+```
+
+For unpacked data, `horizontal` reads row by row and `vertical` reads column
+by column. Both require `width * height` elements, without bit padding.
+
 ## How to build
 
 ```bash

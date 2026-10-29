@@ -2,11 +2,14 @@ export type PreviewLayout =
     | "horizontal"
     | "vertical";
 
+export type PreviewPacking = "packed" | "unpacked";
+
 export interface PreviewMetadata {
     type: "1bpp";
     width: number;
     height: number;
     layout: PreviewLayout;
+    packing: PreviewPacking;
 }
 
 export interface PreviewArray {

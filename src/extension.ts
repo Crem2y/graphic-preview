@@ -29,11 +29,10 @@ export function activate(
                         values
                     } = preview;
 
-                    const requiredBits =
-                        metadata.width * metadata.height;
-
                     const requiredLength =
-                        metadata.layout === "horizontal"
+                        metadata.packing === "unpacked"
+                            ? metadata.width * metadata.height
+                            : metadata.layout === "horizontal"
                             ? Math.ceil(metadata.width / 8) *
                             metadata.height
                             : metadata.width *
@@ -45,7 +44,8 @@ export function activate(
                         md.appendMarkdown(`### ${name}\n\n`);
                         md.appendMarkdown(
                             `Not enough data: ` +
-                            `${values.length}/${requiredLength} bytes`
+                            `${values.length}/${requiredLength} ` +
+                            (metadata.packing === "unpacked" ? "pixels" : "bytes")
                         );
 
                         return new vscode.Hover(md);
@@ -55,7 +55,8 @@ export function activate(
                         values,
                         metadata.width,
                         metadata.height,
-                        metadata.layout
+                        metadata.layout,
+                        metadata.packing
                     );
 
                     const md =

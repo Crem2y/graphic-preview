@@ -161,6 +161,12 @@ function parseMetadata(
     }
 
     const width = value.width as number;
+    const packing = value.packing === undefined ? "packed" : value.packing;
+
+    if (packing !== "packed" && packing !== "unpacked") {
+        return;
+    }
+
     const height = value.height as number;
 
     if (width <= 0 || height <= 0) {
@@ -175,7 +181,8 @@ function parseMetadata(
         type: "1bpp",
         width,
         height,
-        layout: value.layout
+        layout: value.layout,
+        packing
     };
 }
 

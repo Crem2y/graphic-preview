@@ -1,5 +1,5 @@
 import { PNG } from "pngjs";
-import { PreviewLayout } from "./previewTypes";
+import { PreviewLayout, PreviewPacking } from "./previewTypes";
 
 const PREVIEW_SCALE = 4;
 
@@ -7,7 +7,8 @@ export function render1bpp(
     values: number[],
     width: number,
     height: number,
-    layout: PreviewLayout
+    layout: PreviewLayout,
+    packing: PreviewPacking = "packed"
 ): string {
     const outputWidth = width * PREVIEW_SCALE;
     const outputHeight = height * PREVIEW_SCALE;
@@ -19,7 +20,9 @@ export function render1bpp(
 
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-            const bit = layout === "horizontal"
+            const bit = packing === "unpacked"
+                ? (values[layout === "horizontal" ? y * width + x : x * height + y] ?? 0)
+                : layout === "horizontal"
                 ? getHorizontalBit(values, width, x, y)
                 : getVerticalBit(values, height, x, y);
 

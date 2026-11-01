@@ -2,7 +2,7 @@
   "name": "c-array-image-preview",
   "displayName": "C Array Image Preview",
   "description": "Preview 1bpp and RGB565 image arrays directly in C and C++ source code on hover.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "Crem2y",
   "license": "MIT",
   "engines": {
@@ -45,10 +45,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Crem2y/graphic-preview.git"
+    "url": "https://github.com/Crem2y/c-array-image-preview.git"
   },
   "bugs": {
-    "url": "https://github.com/Crem2y/graphic-preview/issues"
+    "url": "https://github.com/Crem2y/c-array-image-preview/issues"
   },
-  "homepage": "https://github.com/Crem2y/graphic-preview#readme"
+  "homepage": "https://github.com/Crem2y/c-array-image-preview#readme"
 }

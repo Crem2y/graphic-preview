@@ -2,6 +2,11 @@
 
 All notable changes to the "C Array Image Preview" extension will be documented in this file.
 
+## 1.0.0 - 2026-11-01
+
+### Modified
+- Rename repository and update link
+
 ## 1.0.0 - 2026-10-30
 
 ### Added

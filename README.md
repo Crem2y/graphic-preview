@@ -112,6 +112,14 @@ file containing the example above and hover over the array name or its contents.
 
 ## Release Notes
 
+### 1.0.2
+
+Added the extension icon.
+
+### 1.0.1
+
+Updated repository, issue tracker, and homepage links after the repository rename.
+
 ### 1.0.0
 
 First stable release with packed/unpacked 1bpp, little-endian RGB565,

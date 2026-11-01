@@ -2,8 +2,9 @@
   "name": "c-array-image-preview",
   "displayName": "C Array Image Preview",
   "description": "Preview 1bpp and RGB565 image arrays directly in C and C++ source code on hover.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "Crem2y",
+  "icon": "images/icon.png",
   "license": "MIT",
   "engines": {
     "vscode": "^1.125.0"
